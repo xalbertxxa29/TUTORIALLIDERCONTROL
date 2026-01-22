@@ -6,7 +6,9 @@ const ASSETS_TO_CACHE = [
     './manual.html',
     './style.css',
     './script.js',
-    './assets/pdf/manual.pdf'
+    './assets/pdf/manual.pdf',
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'
     // Videos will be cached dynamically as they are requested to avoid initial massive download
 ];
 

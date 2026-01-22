@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    if ('serviceWorker' in navigator) {
+    // Service Worker only works on HTTP/HTTPS, not file://
+    if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('./sw.js')
                 .then(registration => {

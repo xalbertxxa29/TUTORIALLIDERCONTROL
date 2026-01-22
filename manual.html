@@ -12,17 +12,40 @@
         .pdf-container {
             width: 100%;
             height: 85vh;
-            /* Occupy most of the screen */
             border-radius: 16px;
-            overflow: hidden;
-            background: #222;
+            background: #fff;
+            /* White background for PDF contrast */
             border: 1px solid var(--card-border);
+            overflow: hidden;
+            position: relative;
         }
 
-        iframe {
+        object,
+        embed {
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        .fallback-msg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #333;
+            width: 80%;
+        }
+
+        .btn-fallback {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--accent-gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -38,10 +61,13 @@
         </header>
 
         <div class="pdf-container">
-            <!-- Embedding the PDF -->
-            <iframe src="assets/pdf/manual.pdf" type="application/pdf">
-                <p>Su navegador no puede mostrar este PDF. <a href="assets/pdf/manual.pdf">Descárguelo aquí</a>.</p>
-            </iframe>
+            <!-- Robust fallback for file:// protocol -->
+            <object data="assets/pdf/manual.pdf" type="application/pdf">
+                <div class="fallback-msg">
+                    <p>Tu navegador no está visualizando el PDF automáticamente (común en modo local).</p>
+                    <a href="assets/pdf/manual.pdf" class="btn-fallback">Abrir Manual Aquí</a>
+                </div>
+            </object>
         </div>
     </div>
     <script src="script.js"></script>
