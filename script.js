@@ -33,14 +33,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const video = document.getElementById(elemId);
         if (!video) return;
 
+        // Try native first (mostly for PC)
+        // Note: In some WebViews, requestFullscreen exists but does nothing or fails.
+        // We will prioritize the "Fake" fullscreen for better control in this specific user case
+        // if the user is on mobile/tablet likely.
+
+        const container = video.closest('.video-container');
+        if (!container) return;
+
+        // Check if we are already in fake fullscreen
+        if (container.classList.contains('pseudo-fullscreen')) {
+            container.classList.remove('pseudo-fullscreen');
+            // Remove video specific styles if needed
+            return;
+        }
+
+        // Apply Fake Fullscreen
+        container.classList.add('pseudo-fullscreen');
+
+        // Also try native just in case it works nicely behind the scenes
         if (video.requestFullscreen) {
-            video.requestFullscreen();
-        } else if (video.webkitRequestFullscreen) { /* Safari */
-            video.webkitRequestFullscreen();
-        } else if (video.msRequestFullscreen) { /* IE11 */
-            video.msRequestFullscreen();
-        } else if (video.webkitEnterFullScreen) { /* iOS WebView special case */
-            video.webkitEnterFullScreen();
+            video.requestFullscreen().catch(e => console.log('Native FS failed, using fake'));
+        } else if (video.webkitEnterFullScreen) {
+            video.webkitEnterFullScreen(); // iOS
         }
     };
 });
