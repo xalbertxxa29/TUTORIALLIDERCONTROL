@@ -26,4 +26,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         });
     }
+
+    // Fullscreen Logic
+    window.toggleFullScreen = function (elemId) {
+        const video = document.getElementById(elemId);
+        if (!video) return;
+
+        if (video.requestFullscreen) {
+            video.requestFullscreen();
+        } else if (video.webkitRequestFullscreen) { /* Safari */
+            video.webkitRequestFullscreen();
+        } else if (video.msRequestFullscreen) { /* IE11 */
+            video.msRequestFullscreen();
+        } else if (video.webkitEnterFullScreen) { /* iOS WebView special case */
+            video.webkitEnterFullScreen();
+        }
+    };
 });
